@@ -28,7 +28,8 @@ from src.pipeline.embedder import TextEmbedder
 from src.storage.chroma_store import VectorStore
 from src.pipeline.extractor import extract_entities
 from src.graph.knowledge_graph import get_knowledge_graph
-from src.pipeline.llm import get_llm, _extract_json, _smart_fallback
+from src.pipeline.llm import _extract_json, _smart_fallback
+from src.pipeline.router import resolve_llm, llm_display_label
 
 # Singletons for reusing instances across calls
 _embedder: Optional[TextEmbedder] = None
@@ -221,7 +222,11 @@ Respond with ONLY this JSON object — no markdown fences, no preamble, no trail
 """
 
 
-def generate_answer(query: str, context: Dict[str, Any]) -> Dict[str, Any]:
+def generate_answer(
+    query: str,
+    context: Dict[str, Any],
+    router_mode: str = "hybrid",
+) -> Dict[str, Any]:
     """Generate a structured RAG answer from the context object produced by retrieve_context().
 
     Args:
@@ -295,12 +300,11 @@ def generate_answer(query: str, context: Dict[str, Any]) -> Dict[str, Any]:
     )
 
     # ── Call LLM or fall back to smart context formatter ─────────────
-    llm = get_llm()
-    is_nvidia = "NvidiaLLM" in type(llm).__name__
-    llm_label = "NVIDIA API" if is_nvidia else "Ollama"
+    llm, route = resolve_llm(router_mode, query, context)
+    llm_label = llm_display_label(llm)
 
     if llm.available:
-        logger.info(f"generate_answer: calling {llm_label} [{llm.model}]")
+        logger.info(f"generate_answer: calling {llm_label} [{llm.model}] | route={route['target']}")
         try:
             raw    = llm.generate(prompt, max_tokens=1200)
             result = _extract_json(raw)
@@ -325,6 +329,10 @@ def generate_answer(query: str, context: Dict[str, Any]) -> Dict[str, Any]:
         result["sources"] = source_list
         result["model_used"] = "Smart Context"
         result["entities_used"] = entity_ids
+        result["llm_metrics"] = {}
+        result["route_target"] = route.get("target", "local")
+        result["route_reason"] = route.get("reason", "")
+        result["router_mode"] = route.get("router_mode", router_mode)
         return result
 
     # ── Normalise output schema ───────────────────────────────────────────────
@@ -349,6 +357,11 @@ def generate_answer(query: str, context: Dict[str, Any]) -> Dict[str, Any]:
     result["model_used"] = (
         f"{llm_label} / {llm.model}" if llm.available else "Smart Context"
     )
+    metrics = getattr(llm, "last_metrics", None)
+    result["llm_metrics"] = metrics.to_dict() if metrics else {}
+    result["route_target"] = route.get("target", "local")
+    result["route_reason"] = route.get("reason", "")
+    result["router_mode"] = route.get("router_mode", router_mode)
 
     logger.info(
         f"generate_answer done — confidence={result['confidence']}, "

@@ -10,10 +10,74 @@ is required (already common in RAG stacks).
 import json
 import re
 import os
-from typing import Optional
+import time
+from dataclasses import dataclass, asdict
+from typing import Optional, Dict, Any
 from loguru import logger
 
 from src.config import settings
+
+
+# NVIDIA NIM list pricing (USD per 1M tokens) — integrate.api.nvidia.com
+_NVIDIA_PRICING = {
+    "nemotron-3-ultra":  {"input": 0.50, "output": 2.20},
+    "nemotron-3-super":   {"input": 0.08, "output": 0.45},
+    "nemotron-3-nano":    {"input": 0.05, "output": 0.20},
+    "nemotron-nano":      {"input": 0.06, "output": 0.20},
+    "default":            {"input": 0.50, "output": 2.20},
+}
+
+
+def _pricing_for_model(model: str) -> Dict[str, float]:
+    model_lower = (model or "").lower()
+    for key, rates in _NVIDIA_PRICING.items():
+        if key != "default" and key in model_lower:
+            return rates
+    return _NVIDIA_PRICING["default"]
+
+
+def _estimate_tokens(text: str) -> int:
+    """Rough token estimate when the API omits usage metadata."""
+    return max(1, len(text) // 4)
+
+
+@dataclass
+class LLMMetrics:
+    """Per-call LLM performance and cost metrics."""
+    llm_latency_ms: int = 0
+    prompt_tokens: int = 0
+    completion_tokens: int = 0
+    total_tokens: int = 0
+    estimated_cost_usd: float = 0.0
+    token_throughput_tps: float = 0.0
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+
+
+def _build_metrics(
+    *,
+    llm_latency_ms: int,
+    prompt_tokens: int,
+    completion_tokens: int,
+    cost_input_rate: float = 0.0,
+    cost_output_rate: float = 0.0,
+) -> LLMMetrics:
+    total = prompt_tokens + completion_tokens
+    cost = (
+        (prompt_tokens / 1_000_000) * cost_input_rate
+        + (completion_tokens / 1_000_000) * cost_output_rate
+    )
+    latency_s = max(llm_latency_ms / 1000, 0.001)
+    throughput = completion_tokens / latency_s if completion_tokens else 0.0
+    return LLMMetrics(
+        llm_latency_ms=llm_latency_ms,
+        prompt_tokens=prompt_tokens,
+        completion_tokens=completion_tokens,
+        total_tokens=total,
+        estimated_cost_usd=round(cost, 8),
+        token_throughput_tps=round(throughput, 1),
+    )
 
 
 # ── Prompts ────────────────────────────────────────────────────────────────────
@@ -81,6 +145,7 @@ class NvidiaLLM:
             settings.nvidia_api_key_10,
         ]
         self._keys = [k.strip() for k in raw_keys if k and k.strip()]
+        self.last_metrics: Optional[LLMMetrics] = None
 
         if self._keys:
             logger.info(
@@ -105,6 +170,9 @@ class NvidiaLLM:
 
         last_error: Optional[Exception] = None
 
+        rates = _pricing_for_model(self.model)
+        full_prompt = f"{SYSTEM_PROMPT}\n{prompt}"
+
         for idx, api_key in enumerate(self._keys, start=1):
             try:
                 logger.info(
@@ -113,6 +181,7 @@ class NvidiaLLM:
                 )
                 client = OpenAI(base_url=self.base_url, api_key=api_key)
 
+                t0 = time.perf_counter()
                 completion = client.chat.completions.create(
                     model=self.model,
                     messages=[
@@ -127,10 +196,14 @@ class NvidiaLLM:
                         "reasoning_budget": max_tokens,
                     },
                     stream=True,
+                    stream_options={"include_usage": True},
                 )
 
                 answer_parts = []
+                usage = None
                 for chunk in completion:
+                    if getattr(chunk, "usage", None):
+                        usage = chunk.usage
                     if not chunk.choices:
                         continue
                     delta = chunk.choices[0].delta
@@ -142,8 +215,29 @@ class NvidiaLLM:
                     if delta.content:
                         answer_parts.append(delta.content)
 
-                logger.info(f"NVIDIA NIM — key {idx} succeeded.")
-                return "".join(answer_parts)
+                answer = "".join(answer_parts)
+                llm_latency_ms = int((time.perf_counter() - t0) * 1000)
+
+                if usage:
+                    prompt_tokens = getattr(usage, "prompt_tokens", 0) or 0
+                    completion_tokens = getattr(usage, "completion_tokens", 0) or 0
+                else:
+                    prompt_tokens = _estimate_tokens(full_prompt)
+                    completion_tokens = _estimate_tokens(answer)
+
+                self.last_metrics = _build_metrics(
+                    llm_latency_ms=llm_latency_ms,
+                    prompt_tokens=prompt_tokens,
+                    completion_tokens=completion_tokens,
+                    cost_input_rate=rates["input"],
+                    cost_output_rate=rates["output"],
+                )
+                logger.info(
+                    f"NVIDIA NIM — key {idx} succeeded in {llm_latency_ms} ms | "
+                    f"tokens={self.last_metrics.total_tokens} | "
+                    f"cost=${self.last_metrics.estimated_cost_usd:.6f}"
+                )
+                return answer
 
             except AuthenticationError as e:
                 logger.warning(f"NVIDIA key {idx} — AuthenticationError: {e}. Trying next key.")
@@ -185,6 +279,7 @@ class OllamaLLM:
         self._requests = _requests
         self.base_url = base_url.rstrip("/")
         self.model: Optional[str] = None
+        self.last_metrics: Optional[LLMMetrics] = None
         self._detect_model()
 
     def _detect_model(self):
@@ -227,13 +322,28 @@ class OllamaLLM:
                 "repeat_penalty": 1.1,
             },
         }
+        t0 = time.perf_counter()
         resp = _requests.post(
             f"{self.base_url}/api/generate",
             json=payload,
             timeout=3,   # fast fail — falls through to smart fallback
         )
         resp.raise_for_status()
-        return resp.json().get("response", "")
+        data = resp.json()
+        llm_latency_ms = int((time.perf_counter() - t0) * 1000)
+        prompt_tokens = int(data.get("prompt_eval_count") or 0)
+        completion_tokens = int(data.get("eval_count") or 0)
+        if not prompt_tokens and not completion_tokens:
+            prompt_tokens = _estimate_tokens(f"{SYSTEM_PROMPT}\n{prompt}")
+            completion_tokens = _estimate_tokens(data.get("response", ""))
+        self.last_metrics = _build_metrics(
+            llm_latency_ms=llm_latency_ms,
+            prompt_tokens=prompt_tokens,
+            completion_tokens=completion_tokens,
+            cost_input_rate=0.0,
+            cost_output_rate=0.0,
+        )
+        return data.get("response", "")
 
 
 # ── JSON parsing ───────────────────────────────────────────────────────────────
@@ -317,20 +427,28 @@ _nvidia_llm: Optional[NvidiaLLM] = None
 _ollama_llm: Optional[OllamaLLM] = None
 
 
-def get_llm():
-    """Return the best available LLM: NVIDIA NIM → Ollama → None."""
-    global _nvidia_llm, _ollama_llm
-
-    # NVIDIA NIM (preferred when API key is present)
+def get_nvidia_llm() -> "NvidiaLLM":
+    """Return the NVIDIA NIM client singleton."""
+    global _nvidia_llm
     if _nvidia_llm is None:
         _nvidia_llm = NvidiaLLM()
-    if _nvidia_llm.available:
-        return _nvidia_llm
+    return _nvidia_llm
 
-    # Ollama local fallback
+
+def get_ollama_llm() -> "OllamaLLM":
+    """Return the Ollama client singleton."""
+    global _ollama_llm
     if _ollama_llm is None:
         _ollama_llm = OllamaLLM()
     return _ollama_llm
+
+
+def get_llm():
+    """Return the best available LLM: NVIDIA NIM → Ollama → None."""
+    nvidia = get_nvidia_llm()
+    if nvidia.available:
+        return nvidia
+    return get_ollama_llm()
 
 
 def reset_llm():

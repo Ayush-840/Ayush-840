@@ -54,6 +54,10 @@ class QueryRequest(BaseModel):
     """Schema for incoming RAG queries."""
     question: str = Field(..., min_length=1, max_length=1000, description="The query string")
     top_k: Optional[int] = Field(settings.top_k, ge=1, le=20)
+    router_mode: Optional[str] = Field(
+        "hybrid",
+        description="LLM routing: hybrid (auto), local (Ollama), or cloud (NVIDIA NIM)",
+    )
 
 
 class QueryResponse(BaseModel):
@@ -65,6 +69,15 @@ class QueryResponse(BaseModel):
     key_points: List[str] = []
     model_used: str = "unknown"
     latency_ms: int = 0
+    llm_latency_ms: int = 0
+    prompt_tokens: int = 0
+    completion_tokens: int = 0
+    total_tokens: int = 0
+    estimated_cost_usd: float = 0.0
+    token_throughput_tps: float = 0.0
+    router_mode: str = "hybrid"
+    route_target: str = ""
+    route_reason: str = ""
 
 
 class FeedbackRequest(BaseModel):
@@ -417,12 +430,14 @@ async def query_rag(request: QueryRequest):
             )
 
         # ── Step 2: Generate answer (LLM / smart fallback) ─────────────────────
-        ans = generate_answer(request.question, context)
+        ans = generate_answer(request.question, context, router_mode=request.router_mode or "hybrid")
+        llm_metrics = ans.get("llm_metrics") or {}
 
         latency_ms = int((time.time() - t_start) * 1000)
         logger.info(
             f"/query answered in {latency_ms} ms | "
-            f"confidence={ans.get('confidence')} | model={ans.get('model_used')}"
+            f"confidence={ans.get('confidence')} | model={ans.get('model_used')} | "
+            f"route={ans.get('route_target')} | llm={llm_metrics.get('llm_latency_ms', 0)} ms"
         )
 
         return QueryResponse(
@@ -433,6 +448,15 @@ async def query_rag(request: QueryRequest):
             key_points   = ans.get("key_points", []),
             model_used   = ans.get("model_used", "unknown"),
             latency_ms   = latency_ms,
+            llm_latency_ms       = llm_metrics.get("llm_latency_ms", 0),
+            prompt_tokens        = llm_metrics.get("prompt_tokens", 0),
+            completion_tokens    = llm_metrics.get("completion_tokens", 0),
+            total_tokens         = llm_metrics.get("total_tokens", 0),
+            estimated_cost_usd   = llm_metrics.get("estimated_cost_usd", 0.0),
+            token_throughput_tps = llm_metrics.get("token_throughput_tps", 0.0),
+            router_mode          = ans.get("router_mode", request.router_mode or "hybrid"),
+            route_target         = ans.get("route_target", ""),
+            route_reason         = ans.get("route_reason", ""),
         )
 
     except HTTPException:
@@ -590,15 +614,22 @@ async def debug_search(
 
 @app.get("/llm/status")
 async def llm_status():
-    """Check whether NVIDIA NIM or Ollama is running and which model is selected."""
-    from src.pipeline.llm import get_llm, NvidiaLLM, OllamaLLM
-    llm = get_llm()
-    is_nvidia = isinstance(llm, NvidiaLLM)
-    is_ollama = isinstance(llm, OllamaLLM)
+    """Check whether NVIDIA NIM and Ollama are available for hybrid routing."""
+    from src.pipeline.llm import get_nvidia_llm, get_ollama_llm
+
+    nvidia = get_nvidia_llm()
+    ollama = get_ollama_llm()
+    primary = get_llm()
+
     return {
-        "nvidia_available": is_nvidia and llm.available,
-        "ollama_available": is_ollama and llm.available,
-        "model":            llm.model or "none",
-        "base_url":         llm.base_url,
-        "mode":             "nvidia" if is_nvidia else ("ollama" if is_ollama else "smart-context-fallback"),
+        "nvidia_available": nvidia.available,
+        "ollama_available": ollama.available,
+        "nvidia_model":     nvidia.model or "none",
+        "ollama_model":     ollama.model or "none",
+        "model":            primary.model or "none",
+        "base_url":         getattr(primary, "base_url", ""),
+        "mode":             "hybrid" if nvidia.available and ollama.available else (
+            "nvidia" if nvidia.available else ("ollama" if ollama.available else "smart-context-fallback")
+        ),
+        "router_modes":     ["hybrid", "local", "cloud"],
     }

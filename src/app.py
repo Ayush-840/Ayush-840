@@ -146,6 +146,34 @@ st.markdown("""
                     border-radius: 8px; padding: 0.5rem 0.9rem; color: #6ee7b7; font-size: 0.82rem; }
     .llm-pill-off { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.35);
                     border-radius: 8px; padding: 0.5rem 0.9rem; color: #fde047; font-size: 0.82rem; }
+
+    /* ── LLM live metrics ── */
+    .llm-metric-row {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+        font-size: 0.78rem; color: #cbd5e1;
+    }
+    .llm-metric-row:last-child { border-bottom: none; }
+    .llm-metric-label { color: #94a3b8; }
+    .llm-metric-value { color: #e2e8f0; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .llm-metric-value.cost { color: #fcd34d; }
+    .llm-metric-value.speed { color: #67e8f9; }
+    .llm-metric-value.latency { color: #86efac; }
+
+    /* ── Hybrid router ── */
+    .router-pill {
+        background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.35);
+        border-radius: 8px; padding: 0.45rem 0.75rem; color: #c7d2fe; font-size: 0.78rem;
+        margin-top: 0.35rem;
+    }
+    .router-pill-local {
+        background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.35); color: #6ee7b7;
+    }
+    .router-pill-cloud {
+        background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.35); color: #93c5fd;
+    }
+    .badge-route-local { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+    .badge-route-cloud { background: rgba(59,130,246,0.2); color: #93c5fd; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -165,6 +193,27 @@ def confidence_badge(conf: str) -> str:
     return f'<span class="badge badge-{colour}">{icon} Confidence: {conf}</span>'
 
 
+def route_badge(route_target: str, route_reason: str = "") -> str:
+    target = (route_target or "").lower()
+    if target == "cloud":
+        label = "☁️ Cloud Route"
+        css = "badge-route-cloud"
+    elif target == "local":
+        label = "🔒 Local Route"
+        css = "badge-route-local"
+    else:
+        return ""
+    title = route_reason.replace('"', "&quot;") if route_reason else ""
+    return f'<span class="badge {css}" title="{title}">{label}</span>'
+
+
+ROUTER_MODE_LABELS = {
+    "hybrid": "🔀 Hybrid Router (Auto)",
+    "local": "🔒 Local Mode (Ollama)",
+    "cloud": "☁️ Cloud Mode (NVIDIA NIM)",
+}
+
+
 def post_feedback(question: str, answer: str, rating: int):
     try:
         requests.post(
@@ -174,6 +223,82 @@ def post_feedback(question: str, answer: str, rating: int):
         )
     except Exception:
         pass
+
+
+def _default_llm_metrics() -> dict:
+    return {
+        "llm_latency_ms": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "estimated_cost_usd": 0.0,
+        "token_throughput_tps": 0.0,
+        "query_count": 0,
+    }
+
+
+def update_llm_metrics_from_response(data: dict) -> None:
+    """Persist latest LLM metrics in session state after each /query call."""
+    prev = st.session_state.get("llm_metrics", _default_llm_metrics())
+    st.session_state["llm_metrics"] = {
+        "llm_latency_ms": data.get("llm_latency_ms", 0),
+        "prompt_tokens": data.get("prompt_tokens", 0),
+        "completion_tokens": data.get("completion_tokens", 0),
+        "total_tokens": data.get("total_tokens", 0),
+        "estimated_cost_usd": data.get("estimated_cost_usd", 0.0),
+        "token_throughput_tps": data.get("token_throughput_tps", 0.0),
+        "query_count": prev.get("query_count", 0) + 1,
+    }
+
+
+def render_llm_metrics_sidebar(nvidia_on: bool) -> None:
+    """Expandable live latency / cost / throughput panel under LLM Engine."""
+    metrics = st.session_state.get("llm_metrics", _default_llm_metrics())
+    has_data = metrics.get("query_count", 0) > 0 and metrics.get("llm_latency_ms", 0) > 0
+
+    with st.expander("📈 Live API Metrics", expanded=has_data):
+        if not has_data:
+            st.caption("Run a query in **Chat Q&A** to populate live metrics.")
+            st.markdown(
+                '<div class="llm-metric-row">'
+                '<span class="llm-metric-label">API Latency</span>'
+                '<span class="llm-metric-value latency">—</span></div>'
+                '<div class="llm-metric-row">'
+                '<span class="llm-metric-label">Est. Cost / Query</span>'
+                '<span class="llm-metric-value cost">—</span></div>'
+                '<div class="llm-metric-row">'
+                '<span class="llm-metric-label">Token Throughput</span>'
+                '<span class="llm-metric-value speed">—</span></div>',
+                unsafe_allow_html=True,
+            )
+            return
+
+        latency_s = metrics["llm_latency_ms"] / 1000
+        cost = metrics["estimated_cost_usd"]
+        tps = metrics["token_throughput_tps"]
+        cost_label = f"${cost:.5f}" if nvidia_on else "$0.00000 (local)"
+        pricing_note = (
+            "NVIDIA NIM · $0.50/M in · $2.20/M out"
+            if nvidia_on
+            else "Local Ollama — no API billing"
+        )
+
+        st.markdown(
+            f'<div class="llm-metric-row">'
+            f'<span class="llm-metric-label">API Latency</span>'
+            f'<span class="llm-metric-value latency">{latency_s:.2f}s</span></div>'
+            f'<div class="llm-metric-row">'
+            f'<span class="llm-metric-label">Est. Cost / Query</span>'
+            f'<span class="llm-metric-value cost">{cost_label}</span></div>'
+            f'<div class="llm-metric-row">'
+            f'<span class="llm-metric-label">Token Throughput</span>'
+            f'<span class="llm-metric-value speed">{tps:.0f} tok/s</span></div>',
+            unsafe_allow_html=True,
+        )
+        st.caption(
+            f"{metrics['prompt_tokens']:,} in · {metrics['completion_tokens']:,} out · "
+            f"{metrics['total_tokens']:,} total · {pricing_note}"
+        )
 
 
 @st.dialog("Knowledge Graph Subgraph", width="large")
@@ -252,6 +377,11 @@ st.markdown("""
 
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
+if "llm_metrics" not in st.session_state:
+    st.session_state["llm_metrics"] = _default_llm_metrics()
+if "router_mode" not in st.session_state:
+    st.session_state["router_mode"] = "hybrid"
+
 with st.sidebar:
     st.image("https://img.icons8.com/isometric-line/100/factory.png", width=60)
     st.markdown("### **System Status**")
@@ -269,6 +399,7 @@ with st.sidebar:
     # LLM / Ollama status
     st.markdown("---")
     st.markdown("### **LLM Engine**")
+    nvidia_on = False
     try:
         llm_resp = requests.get(f"{API_URL}/llm/status", timeout=10)
         if llm_resp.status_code == 200:
@@ -276,15 +407,33 @@ with st.sidebar:
             st.session_state["llm_status"] = ls
             nvidia_on = ls.get("nvidia_available", False)
             ollama_on = ls.get("ollama_available", False)
-            if nvidia_on:
-                model_name = ls.get("model", "nemotron").replace("nvidia/", "").replace("meta/", "")
+            router_mode = st.session_state.get("router_mode", "hybrid")
+
+            if nvidia_on and ollama_on:
+                n_model = ls.get("nvidia_model", ls.get("model", "nemotron")).replace("nvidia/", "")
+                o_model = ls.get("ollama_model", "ollama")
+                st.markdown(
+                    f'<div class="router-pill">🔀 <b>Hybrid Router</b> · '
+                    f'{ROUTER_MODE_LABELS.get(router_mode, router_mode)}</div>',
+                    unsafe_allow_html=True,
+                )
+                st.markdown(
+                    f'<div class="llm-pill-on router-pill-local">🔒 Local &nbsp;|&nbsp; <b>{o_model}</b></div>',
+                    unsafe_allow_html=True,
+                )
+                st.markdown(
+                    f'<div class="llm-pill-on router-pill-cloud">☁️ Cloud &nbsp;|&nbsp; <b>{n_model}</b></div>',
+                    unsafe_allow_html=True,
+                )
+            elif nvidia_on:
+                model_name = ls.get("nvidia_model", ls.get("model", "nemotron")).replace("nvidia/", "").replace("meta/", "")
                 st.markdown(
                     f'<div class="llm-pill-on">🟢 NVIDIA API &nbsp;|&nbsp; <b>{model_name}</b></div>',
                     unsafe_allow_html=True,
                 )
             elif ollama_on:
                 st.markdown(
-                    f'<div class="llm-pill-on">🟢 Ollama &nbsp;|&nbsp; <b>{ls["model"]}</b></div>',
+                    f'<div class="llm-pill-on">🟢 Ollama &nbsp;|&nbsp; <b>{ls.get("ollama_model", ls["model"])}</b></div>',
                     unsafe_allow_html=True,
                 )
             else:
@@ -293,8 +442,12 @@ with st.sidebar:
                     '<small>Set NVIDIA_API_KEY or start Ollama</small></div>',
                     unsafe_allow_html=True,
                 )
+        else:
+            st.caption("LLM status unavailable")
     except Exception:
         st.caption("LLM status unavailable")
+
+    render_llm_metrics_sidebar(nvidia_on=nvidia_on)
 
     # Graph stats
     st.markdown("---")
@@ -364,10 +517,11 @@ with tab_chat:
                 conf_badge = confidence_badge(msg.get("confidence", "Medium"))
                 model_badge = f'<span class="badge badge-teal">🤖 {msg.get("model_used","")}</span>'
                 latency_badge = f'<span class="badge badge-gray">⏱ {msg.get("latency_ms", 0)} ms</span>'
+                route_b = route_badge(msg.get("route_target", ""), msg.get("route_reason", ""))
                 st.markdown(
                     f'<div class="chat-bubble chat-assistant">'
                     f'<b>System:</b><br>'
-                    f'{conf_badge} {model_badge} {latency_badge}'
+                    f'{conf_badge} {model_badge} {latency_badge} {route_b}'
                     f'</div>',
                     unsafe_allow_html=True,
                 )
@@ -440,11 +594,15 @@ with tab_chat:
         )
         st.session_state.messages.append({"role": "user", "content": user_query})
 
-        with st.spinner("🧠 Retrieving context + generating answer via local LLM…"):
+        with st.spinner("🧠 Hybrid router: retrieving context + generating answer…"):
             try:
                 resp = requests.post(
                     f"{API_URL}/query",
-                    json={"question": user_query, "top_k": 5},
+                    json={
+                        "question": user_query,
+                        "top_k": 5,
+                        "router_mode": st.session_state.get("router_mode", "hybrid"),
+                    },
                     timeout=120,   # Ollama can take up to 2 min on first call
                 )
                 if resp.status_code == 200:
@@ -456,17 +614,23 @@ with tab_chat:
                     entities    = data.get("entities_used", [])
                     model_used  = data.get("model_used", "unknown")
                     latency_ms  = data.get("latency_ms", 0)
+                    route_target = data.get("route_target", "")
+                    route_reason = data.get("route_reason", "")
+                    update_llm_metrics_from_response(data)
 
                     # Render answer
                     conf_badge   = confidence_badge(confidence)
                     model_badge  = f'<span class="badge badge-teal">🤖 {model_used}</span>'
                     latency_badge = f'<span class="badge badge-gray">⏱ {latency_ms} ms</span>'
+                    route_b = route_badge(route_target, route_reason)
                     st.markdown(
                         f'<div class="chat-bubble chat-assistant">'
-                        f'<b>System:</b><br>{conf_badge} {model_badge} {latency_badge}'
+                        f'<b>System:</b><br>{conf_badge} {model_badge} {latency_badge} {route_b}'
                         f'</div>',
                         unsafe_allow_html=True,
                     )
+                    if route_reason:
+                        st.caption(f"🔀 **Router:** {route_reason}")
                     st.markdown(answer)
 
                     if key_points:
@@ -507,10 +671,13 @@ with tab_chat:
                         "entities_used": entities,
                         "model_used":  model_used,
                         "latency_ms":  latency_ms,
+                        "route_target": route_target,
+                        "route_reason": route_reason,
                         "sources":     sources,
                         "question":    user_query,
                     })
                     st.session_state.last_answer = answer
+                    st.rerun()
 
                 else:
                     st.error(f"API error {resp.status_code}: {resp.text[:200]}")
@@ -839,6 +1006,39 @@ with tab_bench:
 # ══════════════════════════════════════════════════════════════════════════════
 with tab_setup:
     st.subheader("Vector Database & Corpus Control")
+
+    st.markdown("### **🔀 Hybrid LLM Router**")
+    st.caption(
+        "Route sensitive operational data locally while sending complex reasoning to the cloud. "
+        "Hybrid mode auto-classifies each query."
+    )
+    mode_options = ["hybrid", "local", "cloud"]
+    mode_labels = [ROUTER_MODE_LABELS[m] for m in mode_options]
+    current_mode = st.session_state.get("router_mode", "hybrid")
+    selected_label = st.radio(
+        "Inference routing",
+        mode_labels,
+        index=mode_options.index(current_mode) if current_mode in mode_options else 0,
+        horizontal=True,
+        help=(
+            "**Hybrid:** confidential/simple → Ollama; complex cross-doc reasoning → NVIDIA. "
+            "**Local:** all queries stay on-premises. **Cloud:** all queries use NVIDIA NIM."
+        ),
+    )
+    st.session_state["router_mode"] = mode_options[mode_labels.index(selected_label)]
+
+    if st.session_state["router_mode"] == "hybrid":
+        st.info(
+            "**Auto-routing examples:** "
+            "“Show employee incident history” → 🔒 Local · "
+            "“Cross-reference safety Regulation 4.2 with engineering schematics” → ☁️ Cloud"
+        )
+    elif st.session_state["router_mode"] == "local":
+        st.success("🔒 **Local Mode** — all queries processed on Ollama. Data never leaves the plant network.")
+    else:
+        st.warning("☁️ **Cloud Mode** — all queries sent to NVIDIA NIM for maximum reasoning power.")
+
+    st.markdown("---")
     st.write("Initialise the index or upload new documents.")
 
     col1, col2 = st.columns(2)
