@@ -194,16 +194,16 @@ const engineer = {
 
 ---
 
-### 📈 Learning & Skill Proficiency Dashboard
+### 📈 Skill Proficiency Dashboard
 
 <div align="center">
 
-```
-Advanced DSA           [████████████████████░░░░] 85% — Graph Theory, Dynamic Programming
-AI & ML / RAG          [████████████████████░░░░] 82% — LangChain, HuggingFace, Vector Search
-Full-Stack Web         [█████████████████████░░░] 88% — React, Node.js, REST APIs, Tailwind
-System Design          [█████████████████░░░░░░░] 74% — Microservices, Caching, DB Schema
-DevOps & Cloud         [███████████████░░░░░░░░░] 68% — Docker, CI/CD Actions, Linux
+```text
+Advanced DSA           [████████████████████░░░░] 85%
+AI & ML / RAG          [███████████████████░░░░░] 82%
+Full-Stack Web         [█████████████████████░░░] 88%
+System Design          [█████████████████░░░░░░░] 74%
+DevOps & Cloud         [███████████████░░░░░░░░░] 68%
 ```
 
 </div>
