@@ -58,25 +58,23 @@
       animation: glowBreathe 3.5s ease-in-out infinite;
     }
 
-    /* Continuous Seamless Photo <-> Code Logo Crossfade Transition */
+    /* Photo to Code Logo Crossfade Transition */
     @keyframes photoTransition {
-      0%, 42% { opacity: 1; transform: scale(1); }
-      50%, 92% { opacity: 0; transform: scale(0.94); }
-      100% { opacity: 1; transform: scale(1); }
+      0%, 42% { opacity: 1; }
+      50%, 92% { opacity: 0; }
+      100% { opacity: 1; }
     }
     @keyframes logoTransition {
-      0%, 42% { opacity: 0; transform: scale(0.94); }
-      50%, 92% { opacity: 1; transform: scale(1); }
-      100% { opacity: 0; transform: scale(0.94); }
+      0%, 42% { opacity: 0; }
+      50%, 92% { opacity: 1; }
+      100% { opacity: 0; }
     }
 
     .portrait-layer {
       animation: photoTransition 6s ease-in-out infinite;
-      transform-origin: 116px 160px;
     }
     .logo-layer {
       animation: logoTransition 6s ease-in-out infinite;
-      transform-origin: 116px 160px;
     }
 
     /* Status dot heartbeat */
@@ -109,7 +107,7 @@
   <!-- Window Title -->
   <text x="440" y="24" text-anchor="middle" fill="#8B949E" font-size="12.5" class="term-text" font-weight="500">profile.sh — live</text>
 
-  <!-- LEFT: Dynamic Transition Frame (Dot-Matrix Portrait <-> Cyberpunk AI Logo) -->
+  <!-- LEFT: Dynamic Transition Frame (Dot-Matrix Portrait to Cyberpunk AI Logo) -->
   <g transform="translate(0, 0)">
     <!-- Outer Glassmorphic Frame with Breathing Glow -->
     <rect x="32" y="60" width="168" height="212" rx="10" fill="#161B22" fill-opacity="0.8" stroke="url(#borderGrad)" stroke-width="1.5" class="glowing-frame" />
@@ -843,11 +841,11 @@
 
     <!-- LAYER 2: Stylized Cyberpunk AI / Code Logo -->
     <g class="logo-layer">
-      <!-- Cyberpunk Hexagon & Code Icon -->
+      <!-- Cyberpunk Hexagon and Code Icon -->
       <polygon points="116,92 156,115 156,162 116,185 76,162 76,115" fill="none" stroke="#06B6D4" stroke-width="2" filter="url(#neonGlow)" />
       <polygon points="116,100 148,118 148,158 116,176 84,158 84,118" fill="none" stroke="#A855F7" stroke-width="1.2" />
       
-      <!-- Code Brackets & AI Core -->
+      <!-- Code Brackets and AI Core -->
       <path d="M 98 132 L 88 142 L 98 152" fill="none" stroke="#06B6D4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
       <path d="M 134 132 L 144 142 L 134 152" fill="none" stroke="#06B6D4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
       <circle cx="116" cy="142" r="6" fill="#A855F7" filter="url(#neonGlow)" />
@@ -859,7 +857,7 @@
     <text x="116" y="249" text-anchor="middle" fill="#A855F7" font-size="10.5" class="term-text" font-weight="700">AYUSH.RAW</text>
   </g>
 
-  <!-- RIGHT: Terminal Content Header & SYSTEM.INFO HUD Panel -->
+  <!-- RIGHT: Terminal Content Header and SYSTEM.INFO HUD Panel -->
   <g transform="translate(222, 58)">
     
     <!-- Main Cyberpunk Heading -->
