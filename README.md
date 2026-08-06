@@ -39,14 +39,22 @@ I am an **AI Engineer & Full-Stack Developer** focused on engineering **scalable
 
 ### ⚡ Quick Overview
 
-```typescript
+```javascript
 const engineer = {
   name: "Ayush Singh",
   title: "AI Engineer & Full-Stack Developer",
-  education: "B.Tech in CS (AI & ML) @ Newton School of Technology (with D.Y. Patil Univ)",
-  focus: ["Scalable Web Apps", "RAG Pipelines", "Advanced DSA"],
-  status: ["Building", "Learning", "Shipping"],
-  location: "Patna, Bihar, India 🇮🇳",
+  education: "B.Tech CS (AI & ML) @ Newton School of Tech (DY Patil)",
+  location: "Pune / Patna, India 🇮🇳",
+  currentStatus: [
+    "Building",
+    "Learning",
+    "Shipping"
+  ],
+  coreFocus: [
+    "Scalable Web Apps",
+    "RAG Pipelines",
+    "Advanced DSA"
+  ],
   contact: {
     email: "singhayushkumar5555@gmail.com",
     github: "https://github.com/Ayush-840",
