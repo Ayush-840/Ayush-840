@@ -97,11 +97,11 @@ I am an **AI Engineer & Full-Stack Developer** focused on engineering **scalable
 
 | **GitHub Overview** | **Top Languages** |
 | :---: | :---: |
-| <img src="https://github-readme-stats.vercel.app/api?username=Ayush-840&show_icons=true&theme=dark&bg_color=0D1117&title_color=06B6D4&icon_color=A855F7&text_color=E6EDF3&border_color=30363D&hide_border=false" width="410" alt="Ayush's GitHub Stats" /> | <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Ayush-840&layout=compact&theme=dark&bg_color=0D1117&title_color=06B6D4&text_color=E6EDF3&border_color=30363D&hide_border=false" width="410" alt="Top Languages" /> |
+| <img src="https://github-readme-stats-eight-theta.vercel.app/api?username=Ayush-840&amp;show_icons=true&amp;theme=dark&amp;bg_color=0D1117&amp;title_color=06B6D4&amp;icon_color=A855F7&amp;text_color=E6EDF3&amp;border_color=30363D&amp;hide_border=false" width="410" alt="Ayush's GitHub Stats" /> | <img src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=Ayush-840&amp;layout=compact&amp;theme=dark&amp;bg_color=0D1117&amp;title_color=06B6D4&amp;text_color=E6EDF3&amp;border_color=30363D&amp;hide_border=false" width="410" alt="Top Languages" /> |
 
 <br/>
 
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=Ayush-840&theme=dark&background=0D1117&border=30363D&stroke=A855F7&ring=06B6D4&fire=A855F7&currStreakLabel=06B6D4" width="830" alt="GitHub Streak" />
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=Ayush-840&amp;theme=dark&amp;background=0D1117&amp;border=30363D&amp;stroke=A855F7&amp;ring=06B6D4&amp;fire=A855F7&amp;currStreakLabel=06B6D4" width="830" alt="GitHub Streak" />
 
 </div>
 
@@ -124,7 +124,7 @@ I am an **AI Engineer & Full-Stack Developer** focused on engineering **scalable
 ### 🏆 Achievements & Trophies
 
 <div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=Ayush-840&theme=onedark&no-frame=true&column=6&margin-w=15" width="100%" alt="GitHub Trophies" />
+  <img src="https://github-trophies.vercel.app/?username=Ayush-840&amp;theme=onedark&amp;no-frame=true&amp;column=6&amp;margin-w=15" width="100%" alt="GitHub Trophies" />
 </div>
 
 <br/>
