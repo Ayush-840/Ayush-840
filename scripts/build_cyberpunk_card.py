@@ -212,10 +212,6 @@ def build_cyberpunk_banner():
       <circle cx="116" cy="142" r="6" fill="#A855F7" filter="url(#neonGlow)" />
       <text x="116" y="208" text-anchor="middle" fill="#06B6D4" font-size="11" class="term-text" font-weight="700">&lt;AI_SYSTEM&gt;</text>
     </g>
-
-    <!-- Portrait Footer Label -->
-    <rect x="48" y="234" width="136" height="22" rx="4" fill="#161B22" fill-opacity="0.92" stroke="#30363D" stroke-width="0.8" />
-    <text x="116" y="249" text-anchor="middle" fill="#A855F7" font-size="10.5" class="term-text" font-weight="700">AYUSH.RAW</text>
   </g>
 
   <!-- RIGHT: Terminal Content Header and SYSTEM.INFO HUD Panel -->
@@ -317,7 +313,7 @@ def build_cyberpunk_banner():
     os.makedirs(os.path.dirname(out_banner_path), exist_ok=True)
     with open(out_banner_path, "w") as f:
         f.write(svg_content)
-    print(f"Cyberpunk banner SVG generated cleanly without external imports at: {out_banner_path}")
+    print(f"Cyberpunk banner SVG successfully generated without AYUSH.RAW label at: {out_banner_path}")
 
 if __name__ == "__main__":
     build_cyberpunk_banner()
