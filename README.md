@@ -44,7 +44,7 @@ const engineer = {
   name: "Ayush Singh",
   title: "AI Engineer & Full-Stack Developer",
   education: "B.Tech CS (AI & ML) @ Newton School of Tech (DY Patil)",
-  location: "Pune / Patna, India 🇮🇳",
+  location: "Pune, Maharashtra, India 🇮🇳",
   currentStatus: [
     "Building",
     "Learning",
@@ -245,7 +245,7 @@ DevOps & Cloud         [███████████████░░░�
 $ ayush --contact
 --------------------------------------------------------------
  Email    : singhayushkumar5555@gmail.com
- Location : Patna, Bihar, India 🇮🇳
+ Location : Pune, Maharashtra, India 🇮🇳
  Status   : Open for AI & Full-Stack Engineering roles
 --------------------------------------------------------------
 ```
