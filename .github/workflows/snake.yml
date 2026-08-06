@@ -1,0 +1,45 @@
+name: Generate Contribution Snake
+
+on:
+  schedule:
+    # Run every 24 hours at midnight UTC
+    - cron: "0 0 * * *"
+  
+  # Allows manual triggering from the Actions tab
+  workflow_dispatch:
+  
+  # Run on every push to main branch
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  generate:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Generate Contribution Snake SVGs (Dark & Light themes)
+      - name: Generate GitHub Contribution Grid Snake
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            assets/github-contribution-grid-snake.svg?palette=github-dark&color_snake=#A855F7&color_dots=#161B22,#0E4429,#006D32,#26A641,#39D353
+            assets/github-contribution-grid-snake-dark.svg?palette=github-dark&color_snake=#06B6D4&color_dots=#0D1117,#161B22,#30363D,#A855F7,#06B6D4
+
+      # Step 3: Commit and push generated snake SVGs
+      - name: Commit and Push Snake SVGs
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/github-contribution-grid-snake.svg assets/github-contribution-grid-snake-dark.svg
+          git status
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update contribution snake SVG [skip ci]" && git push)
