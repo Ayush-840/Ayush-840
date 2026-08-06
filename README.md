@@ -174,8 +174,6 @@ I am an **AI Engineer & Full-Stack Developer** focused on engineering **scalable
 
 ---
 
----
-
 ### 🌐 Coding Profiles & Professional Links
 
 <div align="center">
@@ -195,18 +193,7 @@ I am an **AI Engineer & Full-Stack Developer** focused on engineering **scalable
 
 </div>
 
----
-
-### 📫 Contact & Connect
-
-```bash
-$ ayush --contact
---------------------------------------------------------------
- Email    : singhayushkumar5555@gmail.com
- Location : Pune, Maharashtra, India 🇮🇳
- Status   : Open for AI & Full-Stack Engineering roles
---------------------------------------------------------------
-```
+<br/>
 
 <div align="center">
   <sub>Handcrafted with precision for <b>Ayush Singh</b> • Dark Glassmorphic Aesthetic</sub>
