@@ -203,7 +203,15 @@ I am an **AI Engineer & Full-Stack Developer** focused on engineering **scalable
 ### 🏆 Achievements &amp; Badges
 
 <div align="center">
-  <a href="https://holopin.io/@singhayushkumar5555pixel" target="_blank">
+  <a href="https://www.holopin.io/@singhayushkumar5555pixel#badges" target="_blank">
+    <img src="https://img.shields.io/badge/Hacktoberfest_2025-Completed_🎃-FF7518?style=for-the-badge&amp;logo=hacktoberfest&amp;logoColor=white" alt="Hacktoberfest 2025 Completed" />
+  </a>
+  &nbsp;
+  <a href="https://github.com/Ayush-840" target="_blank">
+    <img src="https://img.shields.io/badge/Open_Source-Contributor_🌐-A855F7?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="Open Source Contributor" />
+  </a>
+  <br/><br/>
+  <a href="https://www.holopin.io/@singhayushkumar5555pixel#badges" target="_blank">
     <img src="https://holopin.me/singhayushkumar5555pixel" alt="Ayush's Holopin Badge Board" width="100%" />
   </a>
   <br/><br/>
