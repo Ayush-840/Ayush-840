@@ -1,6 +1,6 @@
 <div align="center">
-  <!-- 1. Animated Hero Banner -->
-  <img src="https://raw.githubusercontent.com/Ayush-840/Ayush-840/main/assets/banner.svg?v=3" alt="Ayush Singh - Profile Banner" width="100%" />
+  <!-- 1. Cyberpunk Terminal Animated Hero Banner -->
+  <img src="https://raw.githubusercontent.com/Ayush-840/Ayush-840/main/assets/banner.svg?v=4" alt="Ayush Singh - Cyberpunk Terminal Banner" width="100%" />
 
   <br/><br/>
 
