@@ -226,6 +226,12 @@ I am an **AI Engineer & Full-Stack Developer** focused on engineering **scalable
 <a href="https://www.linkedin.com/in/ayush-singh-219aba379">
   <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
 </a>
+<a href="https://vercel.com/ayush-840s-projects">
+  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
+</a>
+<a href="https://app.netlify.com/teams/ayush-840/projects">
+  <img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white" alt="Netlify" />
+</a>
 
 </div>
 
