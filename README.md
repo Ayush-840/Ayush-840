@@ -174,20 +174,6 @@ I am an **AI Engineer & Full-Stack Developer** focused on engineering **scalable
 
 ---
 
-### 📈 Skill Proficiency Dashboard
-
-<div align="center">
-
-```text
-Advanced DSA           [████████████████████░░░░] 85%
-AI & ML / RAG          [███████████████████░░░░░] 82%
-Full-Stack Web         [█████████████████████░░░] 88%
-System Design          [█████████████████░░░░░░░] 74%
-DevOps & Cloud         [███████████████░░░░░░░░░] 68%
-```
-
-</div>
-
 ---
 
 ### 🌐 Coding Profiles & Professional Links
