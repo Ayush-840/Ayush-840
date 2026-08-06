@@ -4,9 +4,22 @@
 
   <br/><br/>
 
-  <!-- 2. Dynamic Typing Animation -->
+  <!-- Sleek Badge Shields -->
   <a href="https://github.com/Ayush-840">
-    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=3000&pause=1000&color=06B6D4&center=true&vCenter=true&multiline=false&width=700&height=45&lines=AI+Engineer;Full+Stack+Developer;DSA+Enthusiast;Open+Source+Learner;Building+Intelligent+Software+One+Commit+At+A+Time." alt="Typing Header" />
+    <img src="https://img.shields.io/badge/GitHub-Ayush--840-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+  </a>
+  <a href="https://www.linkedin.com/in/ayush-singh-219aba379">
+    <img src="https://img.shields.io/badge/LinkedIn-Ayush_Singh-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
+  </a>
+  <a href="mailto:singhayushkumar5555@gmail.com">
+    <img src="https://img.shields.io/badge/Email-singhayushkumar5555%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
+  </a>
+
+  <br/><br/>
+
+  <!-- Dynamic Typing Animation -->
+  <a href="https://github.com/Ayush-840">
+    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=3000&pause=1000&color=06B6D4&center=true&vCenter=true&multiline=false&width=750&height=45&lines=AI+Engineer+%26+Full-Stack+Developer;Scalable+Web+Apps;RAG+Pipelines;Advanced+DSA;Building+Intelligent+Software." alt="Typing Header" />
   </a>
 </div>
 
@@ -14,11 +27,11 @@
 
 ---
 
-### 🚀 Professional Introduction
+### 🚀 Professional Bio
 
-I am an **AI Engineer & Full Stack Developer** passionate about architecting scalable web applications, designing intelligent RAG pipelines, and solving complex algorithmic challenges. 
+I am an **AI Engineer & Full-Stack Developer** focused on engineering **scalable web applications**, architecting intelligent **RAG pipelines**, and mastering **advanced DSA**.
 
-Currently pursuing **B.Tech in Computer Science (AI & ML)** at **Newton School of Technology** (in collaboration with D.Y. Patil University), I build production-ready software with modern engineering principles, clean code standards, and rigorous optimization.
+🎓 **Education**: Pursuing **B.Tech in CS (AI & ML)** at **Newton School of Technology** *(in collaboration with D.Y. Patil University)*.
 
 > *"Building intelligent software one commit at a time."*
 
@@ -29,14 +42,15 @@ Currently pursuing **B.Tech in Computer Science (AI & ML)** at **Newton School o
 ```typescript
 const engineer = {
   name: "Ayush Singh",
-  username: "Ayush-840",
+  title: "AI Engineer & Full-Stack Developer",
+  education: "B.Tech in CS (AI & ML) @ Newton School of Technology (with D.Y. Patil Univ)",
+  focus: ["Scalable Web Apps", "RAG Pipelines", "Advanced DSA"],
+  status: ["Building", "Learning", "Shipping"],
   location: "Patna, Bihar, India 🇮🇳",
-  education: "B.Tech Computer Science (AI & ML) @ Newton School of Tech",
-  currentStatus: ["Building", "Learning", "Shipping"],
-  coreFocus: ["Artificial Intelligence", "Full Stack Systems", "Advanced DSA", "RAG & LLM Agents"],
   contact: {
     email: "singhayushkumar5555@gmail.com",
-    github: "https://github.com/Ayush-840"
+    github: "https://github.com/Ayush-840",
+    linkedin: "https://www.linkedin.com/in/ayush-singh-219aba379"
   }
 };
 ```
