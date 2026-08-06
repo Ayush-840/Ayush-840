@@ -232,8 +232,7 @@ def build_hero_banner():
       <g transform="translate(0, 26)">
         <text x="0" y="12" fill="#8B949E" font-size="11.5" font-weight="600" class="term-text">EDUCATION</text>
         <text x="90" y="12" fill="#8B949E" font-size="11.5">:</text>
-        <text x="104" y="12" fill="#E6EDF3" font-size="12">B.Tech Computer Science (AI &amp; ML)</text>
-        <text x="345" y="12" fill="#8B949E" font-size="11">@ Newton School of Technology</text>
+        <text x="104" y="12" fill="#E6EDF3" font-size="11.5">B.Tech CS (AI &amp; ML) <tspan fill="#8B949E">@ Newton School of Technology</tspan></text>
       </g>
 
       <!-- Location Row -->
