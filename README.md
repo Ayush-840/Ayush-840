@@ -191,13 +191,13 @@ DevOps & Cloud         [███████████████░░░�
 <a href="https://github.com/Ayush-840">
   <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
 </a>
-<a href="https://leetcode.com/u/Ayush-840">
+<a href="https://leetcode.com/u/ayusher999/">
   <img src="https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=black" alt="LeetCode" />
 </a>
-<a href="https://codeforces.com/profile/Ayush-840">
+<a href="https://codeforces.com/profile/singhayushkumar55550">
   <img src="https://img.shields.io/badge/Codeforces-1F8ACB?style=for-the-badge&logo=codeforces&logoColor=white" alt="Codeforces" />
 </a>
-<a href="https://linkedin.com/in/Ayush-840">
+<a href="https://www.linkedin.com/in/ayush-singh-219aba379">
   <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
 </a>
 
