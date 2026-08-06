@@ -118,10 +118,8 @@ def build_cyberpunk_banner():
   </defs>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap');
-
-    .term-text {{ font-family: 'JetBrains Mono', monospace; }}
-    .ui-text {{ font-family: 'Inter', sans-serif; }}
+    .term-text {{ font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', Consolas, monospace; }}
+    .ui-text {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }}
 
     /* Pulsing Terminal Cursor */
     @keyframes cursorPulse {{
@@ -319,7 +317,7 @@ def build_cyberpunk_banner():
     os.makedirs(os.path.dirname(out_banner_path), exist_ok=True)
     with open(out_banner_path, "w") as f:
         f.write(svg_content)
-    print(f"Cyberpunk transition hero banner SVG successfully written to: {out_banner_path}")
+    print(f"Cyberpunk banner SVG generated cleanly without external imports at: {out_banner_path}")
 
 if __name__ == "__main__":
     build_cyberpunk_banner()
