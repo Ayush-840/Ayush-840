@@ -14,7 +14,7 @@ def create_initial_snake_svg(output_path):
   </style>
 
   <g transform="translate(20, 20)">
-    <!-- Grid of contribution dots -->
+    <!-- Grid of high-contrast contribution dots -->
 '''
     
     # 52 weeks x 7 days grid
@@ -22,29 +22,29 @@ def create_initial_snake_svg(output_path):
         x = week * 15.5
         for day in range(7):
             y = day * 15.5
-            # Color levels
+            # High-visibility Green & Dark Dots
             if (week + day) % 7 == 0:
-                fill = "#A855F7" # Bright Purple
+                fill = "#39D353"
             elif (week * day) % 5 == 0:
-                fill = "#06B6D4" # Cyan accent
+                fill = "#26A641"
             elif (week + day) % 3 == 0:
-                fill = "#26A641" # Green
+                fill = "#006D32"
             elif (week + day) % 2 == 0:
-                fill = "#161B22" # Low activity
+                fill = "#0E4429"
             else:
-                fill = "#21262D" # Empty
+                fill = "#161B22"
                 
-            svg_content += f'    <rect x="{x:.1f}" y="{y:.1f}" width="12" height="12" class="dot" fill="{fill}" opacity="0.85" />\n'
+            svg_content += f'    <rect x="{x:.1f}" y="{y:.1f}" width="12" height="12" class="dot" fill="{fill}" opacity="0.9" />\n'
 
-    # Animated Snake Body overlaying grid
+    # Animated Neon Green Snake Body overlaying grid
     svg_content += '''
-    <!-- Contribution Snake -->
+    <!-- High Visibility Neon Green Snake -->
     <g class="snake-body">
-      <rect x="180" y="31" width="12" height="12" rx="3" fill="#06B6D4" filter="drop-shadow(0 0 4px #06B6D4)" />
-      <rect x="164.5" y="31" width="12" height="12" rx="3" fill="#A855F7" />
-      <rect x="149" y="31" width="12" height="12" rx="3" fill="#A855F7" />
-      <rect x="133.5" y="31" width="12" height="12" rx="3" fill="#3B82F6" opacity="0.8" />
-      <rect x="118" y="31" width="12" height="12" rx="3" fill="#3B82F6" opacity="0.5" />
+      <rect x="180" y="31" width="12" height="12" rx="3" fill="#00FF66" filter="drop-shadow(0 0 6px #00FF66)" />
+      <rect x="164.5" y="31" width="12" height="12" rx="3" fill="#39D353" />
+      <rect x="149" y="31" width="12" height="12" rx="3" fill="#26A641" />
+      <rect x="133.5" y="31" width="12" height="12" rx="3" fill="#006D32" opacity="0.8" />
+      <rect x="118" y="31" width="12" height="12" rx="3" fill="#0E4429" opacity="0.6" />
     </g>
   </g>
 </svg>'''
@@ -52,7 +52,7 @@ def create_initial_snake_svg(output_path):
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, "w") as f:
         f.write(svg_content)
-    print(f"Created snake SVG at: {output_path}")
+    print(f"Updated high-contrast snake SVG at: {output_path}")
 
 if __name__ == "__main__":
     create_initial_snake_svg("/Users/studentuse33gmail.com/Desktop/economic-times-hackathon/assets/github-contribution-grid-snake-dark.svg")

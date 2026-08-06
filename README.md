@@ -138,16 +138,24 @@ const engineer = {
 ### 🐍 Contribution Activity Matrix
 
 <div align="center">
-  <img src="assets/github-contribution-grid-snake-dark.svg" alt="Contribution Snake" width="100%" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Ayush-840/Ayush-840/main/assets/github-contribution-grid-snake-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Ayush-840/Ayush-840/main/assets/github-contribution-grid-snake.svg" />
+    <img src="assets/github-contribution-grid-snake-dark.svg" alt="GitHub Contribution Snake" width="100%" />
+  </picture>
 </div>
+
+<br/>
 
 ---
 
 ### 🏆 Achievements & Trophies
 
 <div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=Ayush-840&theme=darkhub&no-frame=false&no-bg=false&margin-w=10&margin-h=10&column=6" width="100%" alt="GitHub Trophies" />
+  <img src="https://github-profile-trophy.vercel.app/?username=Ayush-840&theme=onedark&no-frame=true&column=6&margin-w=15" width="100%" alt="GitHub Trophies" />
 </div>
+
+<br/>
 
 ---
 

@@ -26,14 +26,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Step 2: Generate Contribution Snake SVGs (Dark & Light themes)
+      # Step 2: Generate Contribution Snake SVGs (High Contrast Dark & Light themes)
       - name: Generate GitHub Contribution Grid Snake
         uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
-            assets/github-contribution-grid-snake.svg?palette=github-dark&color_snake=#A855F7&color_dots=#161B22,#0E4429,#006D32,#26A641,#39D353
-            assets/github-contribution-grid-snake-dark.svg?palette=github-dark&color_snake=#06B6D4&color_dots=#0D1117,#161B22,#30363D,#A855F7,#06B6D4
+            assets/github-contribution-grid-snake.svg?palette=github-light&color_snake=#A855F7
+            assets/github-contribution-grid-snake-dark.svg?palette=github-dark&color_snake=#00FF66&color_dots=#161b22,#0e4429,#006d32,#26a641,#39d353
 
       # Step 3: Commit and push generated snake SVGs
       - name: Commit and Push Snake SVGs
