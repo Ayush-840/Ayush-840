@@ -37,6 +37,85 @@ I am an **AI Engineer & Full-Stack Developer** focused on engineering **scalable
 
 ---
 
+### 📌 Featured Projects
+
+<table width="100%">
+  <tr>
+    <td width="50%" valign="top" align="center">
+      <h3>✈️ Happy Journey Travel</h3>
+      <p align="left">
+        Full-stack travel booking and destination discovery platform featuring interactive itineraries, responsive layouts, and seamless navigation.
+      </p>
+      <p align="left">
+        <b>Tech Stack:</b> <code>React</code> • <code>Node.js</code> • <code>Express</code> • <code>Tailwind</code> • <code>Vercel</code>
+      </p>
+      <br/>
+      <a href="https://github.com/Ayush-840" target="_blank">
+        <img src="https://img.shields.io/badge/Code-GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="GitHub Code" />
+      </a>
+      &nbsp;
+      <a href="https://happy-journey-travel-website.vercel.app/" target="_blank">
+        <img src="https://img.shields.io/badge/Demo-Live_Vercel-06B6D4?style=for-the-badge&amp;logo=vercel&amp;logoColor=white" alt="Live Demo" />
+      </a>
+    </td>
+    <td width="50%" valign="top" align="center">
+      <h3>🎬 The Movie Platform</h3>
+      <p align="left">
+        Interactive movie and TV show discovery application powered by real-time streaming APIs, dynamic search filtering, and dark glassmorphism UI.
+      </p>
+      <p align="left">
+        <b>Tech Stack:</b> <code>React</code> • <code>JavaScript</code> • <code>REST API</code> • <code>Tailwind</code> • <code>Vercel</code>
+      </p>
+      <br/>
+      <a href="https://github.com/Ayush-840" target="_blank">
+        <img src="https://img.shields.io/badge/Code-GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="GitHub Code" />
+      </a>
+      &nbsp;
+      <a href="https://the-movie-delta.vercel.app/" target="_blank">
+        <img src="https://img.shields.io/badge/Demo-Live_Vercel-A855F7?style=for-the-badge&amp;logo=vercel&amp;logoColor=white" alt="Live Demo" />
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top" align="center">
+      <h3>🌾 FarmForFarmer</h3>
+      <p align="left">
+        Agricultural resource and marketplace platform empowering farmers with direct access to agricultural tools, market insights, and services.
+      </p>
+      <p align="left">
+        <b>Tech Stack:</b> <code>JavaScript</code> • <code>HTML5</code> • <code>CSS3</code> • <code>Netlify</code>
+      </p>
+      <br/>
+      <a href="https://github.com/Ayush-840" target="_blank">
+        <img src="https://img.shields.io/badge/Code-GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="GitHub Code" />
+      </a>
+      &nbsp;
+      <a href="https://farmforfrmer.netlify.app/" target="_blank">
+        <img src="https://img.shields.io/badge/Demo-Live_Netlify-22C55E?style=for-the-badge&amp;logo=netlify&amp;logoColor=white" alt="Live Demo" />
+      </a>
+    </td>
+    <td width="50%" valign="top" align="center">
+      <h3>⚡ Dainty Kelpie Web App</h3>
+      <p align="left">
+        Feature-packed web application featuring modern responsive frontend architecture, optimized state management, and elegant UI components.
+      </p>
+      <p align="left">
+        <b>Tech Stack:</b> <code>React</code> • <code>Tailwind</code> • <code>JavaScript</code> • <code>Netlify</code>
+      </p>
+      <br/>
+      <a href="https://github.com/Ayush-840" target="_blank">
+        <img src="https://img.shields.io/badge/Code-GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="GitHub Code" />
+      </a>
+      &nbsp;
+      <a href="https://dainty-kelpie-c88314.netlify.app/" target="_blank">
+        <img src="https://img.shields.io/badge/Demo-Live_Netlify-06B6D4?style=for-the-badge&amp;logo=netlify&amp;logoColor=white" alt="Live Demo" />
+      </a>
+    </td>
+  </tr>
+</table>
+
+---
+
 ### 💻 Tech Stack
 
 <table width="100%">
@@ -132,85 +211,6 @@ I am an **AI Engineer & Full-Stack Developer** focused on engineering **scalable
 </div>
 
 <br/>
-
----
-
-### 📌 Featured Projects
-
-<table width="100%">
-  <tr>
-    <td width="50%" valign="top" align="center">
-      <h3>✈️ Happy Journey Travel</h3>
-      <p align="left">
-        Full-stack travel booking and destination discovery platform featuring interactive itineraries, responsive layouts, and seamless navigation.
-      </p>
-      <p align="left">
-        <b>Tech Stack:</b> <code>React</code> • <code>Node.js</code> • <code>Express</code> • <code>Tailwind</code> • <code>Vercel</code>
-      </p>
-      <br/>
-      <a href="https://github.com/Ayush-840" target="_blank">
-        <img src="https://img.shields.io/badge/Code-GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="GitHub Code" />
-      </a>
-      &nbsp;
-      <a href="https://happy-journey-travel-website.vercel.app/" target="_blank">
-        <img src="https://img.shields.io/badge/Demo-Live_Vercel-06B6D4?style=for-the-badge&amp;logo=vercel&amp;logoColor=white" alt="Live Demo" />
-      </a>
-    </td>
-    <td width="50%" valign="top" align="center">
-      <h3>🎬 The Movie Platform</h3>
-      <p align="left">
-        Interactive movie and TV show discovery application powered by real-time streaming APIs, dynamic search filtering, and dark glassmorphism UI.
-      </p>
-      <p align="left">
-        <b>Tech Stack:</b> <code>React</code> • <code>JavaScript</code> • <code>REST API</code> • <code>Tailwind</code> • <code>Vercel</code>
-      </p>
-      <br/>
-      <a href="https://github.com/Ayush-840" target="_blank">
-        <img src="https://img.shields.io/badge/Code-GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="GitHub Code" />
-      </a>
-      &nbsp;
-      <a href="https://the-movie-delta.vercel.app/" target="_blank">
-        <img src="https://img.shields.io/badge/Demo-Live_Vercel-A855F7?style=for-the-badge&amp;logo=vercel&amp;logoColor=white" alt="Live Demo" />
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top" align="center">
-      <h3>🌾 FarmForFarmer</h3>
-      <p align="left">
-        Agricultural resource and marketplace platform empowering farmers with direct access to agricultural tools, market insights, and services.
-      </p>
-      <p align="left">
-        <b>Tech Stack:</b> <code>JavaScript</code> • <code>HTML5</code> • <code>CSS3</code> • <code>Netlify</code>
-      </p>
-      <br/>
-      <a href="https://github.com/Ayush-840" target="_blank">
-        <img src="https://img.shields.io/badge/Code-GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="GitHub Code" />
-      </a>
-      &nbsp;
-      <a href="https://farmforfrmer.netlify.app/" target="_blank">
-        <img src="https://img.shields.io/badge/Demo-Live_Netlify-22C55E?style=for-the-badge&amp;logo=netlify&amp;logoColor=white" alt="Live Demo" />
-      </a>
-    </td>
-    <td width="50%" valign="top" align="center">
-      <h3>⚡ Dainty Kelpie Web App</h3>
-      <p align="left">
-        Feature-packed web application featuring modern responsive frontend architecture, optimized state management, and elegant UI components.
-      </p>
-      <p align="left">
-        <b>Tech Stack:</b> <code>React</code> • <code>Tailwind</code> • <code>JavaScript</code> • <code>Netlify</code>
-      </p>
-      <br/>
-      <a href="https://github.com/Ayush-840" target="_blank">
-        <img src="https://img.shields.io/badge/Code-GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="GitHub Code" />
-      </a>
-      &nbsp;
-      <a href="https://dainty-kelpie-c88314.netlify.app/" target="_blank">
-        <img src="https://img.shields.io/badge/Demo-Live_Netlify-06B6D4?style=for-the-badge&amp;logo=netlify&amp;logoColor=white" alt="Live Demo" />
-      </a>
-    </td>
-  </tr>
-</table>
 
 ---
 
