@@ -155,43 +155,39 @@ const engineer = {
 
 <table width="100%">
   <tr>
-    <td width="50%" valign="top">
-      <h3 align="center">🤖 Intelligent RAG & AI Agent Platform</h3>
-      <p align="justify">
-        Production-grade retrieval-augmented generation engine designed for seamless document querying, semantic vector search, and dynamic agentic workflows using Python, HuggingFace, and vector databases.
+    <td width="50%" valign="top" align="center">
+      <h3>🤖 Intelligent RAG &amp; AI Agent Platform</h3>
+      <p align="left">
+        Production-grade retrieval-augmented generation engine designed for seamless document querying, semantic vector search, and dynamic agentic workflows.
       </p>
-
-```
-Tech Stack: Python • HuggingFace • RAG • Vector DB • FastAPI
-```
-
-      <div align="center">
-        <a href="https://github.com/Ayush-840">
-          <img src="https://img.shields.io/badge/Code-GitHub-181717?style=flat-square&logo=github" alt="Repository" />
-        </a>
-        <a href="https://github.com/Ayush-840">
-          <img src="https://img.shields.io/badge/Demo-Live_System-06B6D4?style=flat-square&logo=vercel" alt="Live Demo" />
-        </a>
-      </div>
+      <p align="left">
+        <b>Tech Stack:</b> <code>Python</code> • <code>HuggingFace</code> • <code>RAG</code> • <code>Vector DB</code> • <code>FastAPI</code>
+      </p>
+      <br/>
+      <a href="https://github.com/Ayush-840" target="_blank">
+        <img src="https://img.shields.io/badge/Code-GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="GitHub Code" />
+      </a>
+      &nbsp;
+      <a href="https://github.com/Ayush-840" target="_blank">
+        <img src="https://img.shields.io/badge/Demo-Live_Vercel-06B6D4?style=for-the-badge&amp;logo=vercel&amp;logoColor=white" alt="Live Demo" />
+      </a>
     </td>
-    <td width="50%" valign="top">
-      <h3 align="center">⚡ High-Performance Full-Stack Dashboard</h3>
-      <p align="justify">
-        Modern developer analytics and workflow automation dashboard featuring real-time data streaming, dynamic dark-mode glassmorphism UI, and optimized REST API endpoints.
+    <td width="50%" valign="top" align="center">
+      <h3>⚡ High-Performance Full-Stack Dashboard</h3>
+      <p align="left">
+        Modern developer analytics and workflow automation dashboard featuring real-time data streaming, dynamic dark-mode glassmorphism UI, and optimized REST APIs.
       </p>
-
-```
-Tech Stack: React • Node.js • Express • MongoDB • Tailwind
-```
-
-      <div align="center">
-        <a href="https://github.com/Ayush-840">
-          <img src="https://img.shields.io/badge/Code-GitHub-181717?style=flat-square&logo=github" alt="Repository" />
-        </a>
-        <a href="https://github.com/Ayush-840">
-          <img src="https://img.shields.io/badge/Demo-Live_System-A855F7?style=flat-square&logo=vercel" alt="Live Demo" />
-        </a>
-      </div>
+      <p align="left">
+        <b>Tech Stack:</b> <code>React</code> • <code>Node.js</code> • <code>Express</code> • <code>MongoDB</code> • <code>Tailwind</code>
+      </p>
+      <br/>
+      <a href="https://github.com/Ayush-840" target="_blank">
+        <img src="https://img.shields.io/badge/Code-GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="GitHub Code" />
+      </a>
+      &nbsp;
+      <a href="https://github.com/Ayush-840" target="_blank">
+        <img src="https://img.shields.io/badge/Demo-Live_Vercel-A855F7?style=for-the-badge&amp;logo=vercel&amp;logoColor=white" alt="Live Demo" />
+      </a>
     </td>
   </tr>
 </table>
