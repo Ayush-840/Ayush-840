@@ -121,15 +121,11 @@ I am an **AI Engineer & Full-Stack Developer** focused on engineering **scalable
 
 ---
 
-### 🏆 Achievements & Trophies
+### 🏆 Achievements &amp; Badges
 
 <div align="center">
-  <a href="https://holopin.io/@Ayush-840" target="_blank">
-    <img src="https://img.shields.io/badge/Hacktoberfest_2025-Completed_(6%2B_PRs)_🎃-FF7518?style=for-the-badge&amp;logo=hacktoberfest&amp;logoColor=white" alt="Hacktoberfest 2025 Completed" />
-  </a>
-  &nbsp;
-  <a href="https://holopin.io/@Ayush-840" target="_blank">
-    <img src="https://holopin.core.assets.holopin.io/profile/Ayush-840?badge=hacktoberfest-2025" alt="Holopin Badge" height="28" />
+  <a href="https://holopin.io/@singhayushkumar5555pixel" target="_blank">
+    <img src="https://holopin.me/singhayushkumar5555pixel" alt="Ayush's Holopin Badge Board" width="100%" />
   </a>
   <br/><br/>
   <img src="https://github-trophies.vercel.app/?username=Ayush-840&amp;theme=onedark&amp;no-frame=true&amp;column=6&amp;margin-w=15" width="100%" alt="GitHub Trophies" />
